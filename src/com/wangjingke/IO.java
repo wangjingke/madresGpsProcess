@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IO {
     public static void process (String path) throws IOException, IllegalBlockSizeException, InvalidKeyException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
@@ -25,12 +27,17 @@ public class IO {
         String[] lineX;
         while ((lineX = reader.readNext()) != null) {
             if (lineX[1].equals("subjectID")) {subjectID = lineX[2];}
-            if (lineX[1].equals("LocationTracking")) {
-                String[] entryX = {subjectID, lineX[0], Enigma.decode(lineX[2], madresKey), lineX[3]};
-                writer.writeNext(entryX);
+            if (lineX[1].equals("Tracking")) {
+                List<String> entryX = new ArrayList<String>();
+                entryX.add(subjectID);
+                entryX.add(lineX[0]);
+                entryX.add(Enigma.decode(lineX[2], madresKey));
+                for (int i = 3; i < lineX.length; i++) {
+                    entryX.add(lineX[i]);
+                }
+                writer.writeNext(entryX.toArray(new String[0]));
             }
         }
         writer.close();
     }
-
 }

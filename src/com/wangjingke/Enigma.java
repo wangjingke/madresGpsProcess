@@ -5,6 +5,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -15,7 +16,7 @@ public class Enigma {
 
     public static Key askForKey() {
         Scanner typeIn = new Scanner(System.in);
-        System.out.println("Enter the key: ");
+        System.out.print("Enter the key: ");
         String key = typeIn.next();
         Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
         return aesKey;
@@ -32,13 +33,13 @@ public class Enigma {
         return encryptedString;
     }
 
-    public static String decode(String input, Key keyX) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    public static String decode(String input, Key keyX) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
         Key aesKey = keyX;
         Cipher cipher = Cipher.getInstance("AES");
 
         Base64.Decoder decoder = Base64.getDecoder();
         cipher.init(Cipher.DECRYPT_MODE, aesKey);
-        String decrypted = new String(cipher.doFinal(decoder.decode(input)));
+        String decrypted = new String(cipher.doFinal(decoder.decode(input)), "UTF-8");
         return decrypted;
     }
 }

@@ -6,12 +6,16 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-
+import java.util.Scanner;
 
 
 public class Main {
-    public static String path = "C:/Users/wangjink/Downloads/madresGpsTesting/MadresGpsTracking_MAD0808.csv";
+
     public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException {
+        Scanner target = new Scanner(System.in);
+        System.out.print("Input the path to the file for decryption: ");
+        String path = target.next();
+
         IO.process(path);
     }
 

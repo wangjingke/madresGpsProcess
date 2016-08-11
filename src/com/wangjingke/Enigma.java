@@ -14,20 +14,20 @@ import java.util.Scanner;
 
 public class Enigma {
 
-    public static Key askForKey() {
+    public static Key askForKey() throws UnsupportedEncodingException {
         Scanner typeIn = new Scanner(System.in);
         System.out.print("Enter the key: ");
         String key = typeIn.next();
-        Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
+        Key aesKey = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
         return aesKey;
     }
 
-    public static String encode (String input, Key keyX) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+    public static String encode (String input, Key keyX) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException, UnsupportedEncodingException {
         Key aesKey = keyX;
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, aesKey);
 
-        byte[] encrypted = cipher.doFinal(input.getBytes());
+        byte[] encrypted = cipher.doFinal(input.getBytes("UTF-8"));
         Base64.Encoder encoder = Base64.getEncoder();
         String encryptedString = encoder.encodeToString(encrypted);
         return encryptedString;

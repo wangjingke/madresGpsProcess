@@ -26,7 +26,7 @@ public class IO {
 
         String[] lineX;
         while ((lineX = reader.readNext()) != null) {
-            if (lineX[1].equals("subjectID")) {subjectID = lineX[2];}
+            if (lineX[1].equals("SubjectID")) {subjectID = lineX[2];}
             if (lineX[1].equals("Tracking")) {
                 List<String> entryX = new ArrayList<String>();
                 entryX.add(subjectID);
